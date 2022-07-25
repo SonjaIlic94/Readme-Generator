@@ -1,6 +1,6 @@
 // TODO: Include packages needed for this application
-const fs = require('fs');
 const inquirer = require('inquirer');
+const fs = require('fs');
 
 // TODO: Create an array of questions for user input
 const questions = [
@@ -19,6 +19,13 @@ const promptUser = () => {
                 type: 'input',
                 name: 'projectTitle',
                 message: questions[0],
+                // when: ({ confirmTitle }) => {
+                //     if (confirmTitle) {
+                //         return true;
+                //     } else {
+                //         return false;
+                //     }
+                // },
                 validate: projectTitleInput => {
                     if (projectTitleInput) {
                         return true;
@@ -102,15 +109,45 @@ const promptUser = () => {
 
     // });
 };
-promptUser().then(answers => console.log(answers));
 
 
+// let data = "this is the readme";
+// let fileName = data.projectTitleInput;
+// fs.writeFileSync(fileName, data);
+
+
+// Formats the file
+function generatePage(data) {
+    return `# ${data.projectTitle}
+
+## Table of Contents
+    1. Description (#description) 
+    2. Installation (#installation)
+    3. Usage (#usage)
+    4. Contribution (#Contribution)
+    5. Licence (#licence)
+
+## Description ${data.projectDescription}
+## Installation ${data.projectInstallation}
+## Usage ${data.projectUsage}
+## Contribution ${data.projectContribution}
+## Licence ${data.projectLicence}
+`;
+};
 
 // TODO: Create a function to write README file
-function writeToFile(fileName, data) { }
+function writeToFile(data) {
+    fs.writeFile('ReadMe.md', generatePage(data), function (err, file) {
+        if (err) throw err;
+        console.log('read me done!');
+    });
+}
+
 
 // TODO: Create a function to initialize app
-function init() { }
+function init() {
+    promptUser().then(answers => writeToFile(answers));
+}
 
 // Function call to initialize app
 init();
