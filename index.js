@@ -1,6 +1,6 @@
 // TODO: Include packages needed for this application
-const fs = require('fs');
 const inquirer = require('inquirer');
+const fs = require('fs');
 
 // TODO: Create an array of questions for user input
 const questions = [
@@ -8,9 +8,16 @@ const questions = [
     "Please enter a description of your project.",
     "Please enter installation instructions for your project.",
     "Please enter usage information.",
-    "Please enter your cotribution guidelines.",
-    "What license are you using?"
+    "Please enter your contribution guidelines.",
+    "What license are you using?",
+    "Please enter your GitHub username.",
+    'Please enter your e-mail.'
 ];
+
+const licenseToBadgeLink = {
+    "MIT": "![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)",
+    "IBM": "![License: IPL 1.0](https://img.shields.io/badge/License-IPL_1.0-blue.svg)"
+};
 
 const promptUser = () => {
     return inquirer
@@ -27,7 +34,6 @@ const promptUser = () => {
                         return false;
                     }
                 }
-
             },
             {
                 type: 'input',
@@ -82,35 +88,98 @@ const promptUser = () => {
                 }
             },
             {
-                type: 'checkbox',
-                name: 'projectLicence',
+                type: 'list',
+                name: 'projectLicense',
                 message: questions[5],
-                choices: ['MIT', '1', '2', '3', 'none'],
-                validate: projectLicenceInput => {
-                    if (projectLicenceInput) {
+                choices: ["MIT", "IBM"],
+                validate: projectLicenseInput => {
+                    if (projectLicenseInput) {
                         return true;
                     } else {
-                        console.log('Please choose a licence.');
+                        console.log('Please choose a license.');
                         return false;
                     }
                 }
             },
+            {
+                type: 'input',
+                name: 'githubUsername',
+                message: questions[6],
+                validate: projectContributionInput => {
+                    if (projectContributionInput) {
+                        return true;
+                    } else {
+                        console.log('Please enter your github username.');
+                        return false;
+                    }
+                }
+
+            },
+            {
+                type: 'input',
+                name: 'userEmail',
+                message: questions[7],
+                validate: projectContributionInput => {
+                    if (projectContributionInput) {
+                        return true;
+                    } else {
+                        console.log('Please enter your e-mail.');
+                        return false;
+                    }
+                }
+
+            },
         ])
-
-    // .then(answers => {
-    //     console.info('Answer:', answers.projectTitle);
-
-    // });
 };
-promptUser().then(answers => console.log(answers));
 
+// Formats the file
+function generatePage(data) {
+    return `# ${data.projectTitle}
 
+## Table of Contents:
+1. [Title](#title)
+2. [Installation](#installation)
+3. [Usage](#usage)
+4. [Contribution](#contribution)
+5. [License](#license)
+6. [GitHub](#github)
+7. [Email](#email)
+
+## Description 
+${data.projectDescription}
+
+## Installation 
+${data.projectInstallation}
+
+## Usage 
+${data.projectUsage}
+
+## Contribution 
+${data.projectContribution}
+
+## License 
+${licenseToBadgeLink[data.projectLicense]}
+
+## GitHub
+https://github.com/${data.githubUsername}
+
+## Email
+Send me an email at ${data.userEmail} to reach me!
+       `;
+};
 
 // TODO: Create a function to write README file
-function writeToFile(fileName, data) { }
+function writeToFile(data) {
+    fs.writeFile('ReadMe.md', generatePage(data), function (err, file) {
+        if (err) throw err;
+        console.log('read me done!');
+    });
+}
 
 // TODO: Create a function to initialize app
-function init() { }
+function init() {
+    promptUser().then(answers => writeToFile(answers));
+}
 
 // Function call to initialize app
 init();
