@@ -1,19 +1,19 @@
 # READme Generator
 
 ## Table of Contents:
-1. * [Title](#title)
-2. * [Installation](#installation)
-3. * [Usage](#usage)
-4. * [Contribution](#contribution)
-5. * [License](#license)
-6. * [GitHub](#github)
-7. * [Email](#email)
+1. [Title](#title)
+2. [Installation](#installation)
+3. [Usage](#usage)
+4. [Contribution](#contribution)
+5. [License](#license)
+6. [GitHub](#github)
+7. [Email](#email)
 
 ## Description 
 This will create a READme file that can be used to generate a table of contents and describe to others how your project functions.
 
 ## Installation 
-You would require node to be installed for this to function as it uses the terminal to capture your inputs.
+This requires node to be installed as it uses the terminal to capture user input.
 
 ## Usage 
 Simply follow the prompts in the terminal to answer questions about your project.

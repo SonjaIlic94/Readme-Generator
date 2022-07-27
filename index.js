@@ -137,13 +137,13 @@ function generatePage(data) {
     return `# ${data.projectTitle}
 
 ## Table of Contents:
-1. * [Title](#title)
-2. * [Installation](#installation)
-3. * [Usage](#usage)
-4. * [Contribution](#contribution)
-5. * [License](#license)
-6. * [GitHub](#github)
-7. * [Email](#email)
+1. [Title](#title)
+2. [Installation](#installation)
+3. [Usage](#usage)
+4. [Contribution](#contribution)
+5. [License](#license)
+6. [GitHub](#github)
+7. [Email](#email)
 
 ## Description 
 ${data.projectDescription}
