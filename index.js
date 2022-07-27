@@ -142,8 +142,7 @@ function generatePage(data) {
 3. [Usage](#usage)
 4. [Contribution](#contribution)
 5. [License](#license)
-6. [GitHub](#github)
-7. [Email](#email)
+6. [Questions](#questions)
 
 ## Description 
 ${data.projectDescription}
@@ -160,10 +159,9 @@ ${data.projectContribution}
 ## License 
 ${licenseToBadgeLink[data.projectLicense]}
 
-## GitHub
+## Questions
 https://github.com/${data.githubUsername}
 
-## Email
 Send me an email at ${data.userEmail} to reach me!
        `;
 };
