@@ -8,11 +8,16 @@ const questions = [
     "Please enter a description of your project.",
     "Please enter installation instructions for your project.",
     "Please enter usage information.",
-    "Please enter your cotribution guidelines.",
+    "Please enter your contribution guidelines.",
     "What license are you using?",
     "Please enter your GitHub username.",
     'Please enter your e-mail.'
 ];
+
+const licenseToBadgeLink = {
+    "MIT": "![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)",
+    "IBM": "![License: IPL 1.0](https://img.shields.io/badge/License-IPL_1.0-blue.svg)"
+};
 
 const promptUser = () => {
     return inquirer
@@ -83,15 +88,15 @@ const promptUser = () => {
                 }
             },
             {
-                type: 'checkbox',
-                name: 'projectLicence',
+                type: 'list',
+                name: 'projectLicense',
                 message: questions[5],
-                choices: ["MIT", "1", "2", "3", "none"],
-                validate: projectLicenceInput => {
-                    if (projectLicenceInput) {
+                choices: ["MIT", "IBM"],
+                validate: projectLicenseInput => {
+                    if (projectLicenseInput) {
                         return true;
                     } else {
-                        console.log('Please choose a licence.');
+                        console.log('Please choose a license.');
                         return false;
                     }
                 }
@@ -125,31 +130,20 @@ const promptUser = () => {
 
             },
         ])
-
-    // .then(answers => {
-    //     console.info('Answer:', answers.projectTitle);
-
-    // });
 };
-
-
-// let data = "this is the readme";
-// let fileName = data.projectTitleInput;
-// fs.writeFileSync(fileName, data);
-
 
 // Formats the file
 function generatePage(data) {
     return `# ${data.projectTitle}
 
 ## Table of Contents:
-    1. [Description - Link](#description) 
-    2. [Installation](# installation)
-    3. [Usage](# usage)
-    4. [Contribution](# contribution)
-    5. [Licence](# licence)
-    6. [GitHub](# gitHub)
-    7. [Email](# email)
+    1. [Title](#title)
+    2. [Installation](#installation)
+    3. [Usage](#usage)
+    4. [Contribution](#contribution)
+    5. [License](#license)
+    6. [GitHub](#github)
+    7. [Email](#email)
 
 ## Description 
 ${data.projectDescription}
@@ -163,31 +157,16 @@ ${data.projectUsage}
 ## Contribution 
 ${data.projectContribution}
 
-## Licence 
-${data.projectLicence}
+## License 
+${licenseToBadgeLink[data.projectLicense]}
 
 ## GitHub
 https://github.com/${data.githubUsername}
 
 ## Email
 Send me an email at ${data.userEmail} to reach me!
-`
-
-        ;
+       `;
 };
-
-
-// function licenceBadge(data) {
-//     var badge = data.projectLicence;
-//     switch (badge) {
-//         case "MIT":
-//             badge.projectLicence[0] = `![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)`;
-//             console.log(badge);
-//             break;
-
-//     }
-// };
-
 
 // TODO: Create a function to write README file
 function writeToFile(data) {
@@ -196,7 +175,6 @@ function writeToFile(data) {
         console.log('read me done!');
     });
 }
-
 
 // TODO: Create a function to initialize app
 function init() {
