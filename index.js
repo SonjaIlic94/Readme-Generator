@@ -9,7 +9,9 @@ const questions = [
     "Please enter installation instructions for your project.",
     "Please enter usage information.",
     "Please enter your cotribution guidelines.",
-    "What license are you using?"
+    "What license are you using?",
+    "Please enter your GitHub username.",
+    'Please enter your e-mail.'
 ];
 
 const promptUser = () => {
@@ -19,13 +21,6 @@ const promptUser = () => {
                 type: 'input',
                 name: 'projectTitle',
                 message: questions[0],
-                // when: ({ confirmTitle }) => {
-                //     if (confirmTitle) {
-                //         return true;
-                //     } else {
-                //         return false;
-                //     }
-                // },
                 validate: projectTitleInput => {
                     if (projectTitleInput) {
                         return true;
@@ -34,7 +29,6 @@ const promptUser = () => {
                         return false;
                     }
                 }
-
             },
             {
                 type: 'input',
@@ -92,7 +86,7 @@ const promptUser = () => {
                 type: 'checkbox',
                 name: 'projectLicence',
                 message: questions[5],
-                choices: ['MIT', '1', '2', '3', 'none'],
+                choices: ["MIT", "1", "2", "3", "none"],
                 validate: projectLicenceInput => {
                     if (projectLicenceInput) {
                         return true;
@@ -101,6 +95,34 @@ const promptUser = () => {
                         return false;
                     }
                 }
+            },
+            {
+                type: 'input',
+                name: 'githubUsername',
+                message: questions[6],
+                validate: projectContributionInput => {
+                    if (projectContributionInput) {
+                        return true;
+                    } else {
+                        console.log('Please enter your github username.');
+                        return false;
+                    }
+                }
+
+            },
+            {
+                type: 'input',
+                name: 'userEmail',
+                message: questions[7],
+                validate: projectContributionInput => {
+                    if (projectContributionInput) {
+                        return true;
+                    } else {
+                        console.log('Please enter your e-mail.');
+                        return false;
+                    }
+                }
+
             },
         ])
 
@@ -120,20 +142,52 @@ const promptUser = () => {
 function generatePage(data) {
     return `# ${data.projectTitle}
 
-## Table of Contents
-    1. Description (#description) 
-    2. Installation (#installation)
-    3. Usage (#usage)
-    4. Contribution (#Contribution)
-    5. Licence (#licence)
+## Table of Contents:
+    1. [Description - Link](#description) 
+    2. [Installation](# installation)
+    3. [Usage](# usage)
+    4. [Contribution](# contribution)
+    5. [Licence](# licence)
+    6. [GitHub](# gitHub)
+    7. [Email](# email)
 
-## Description ${data.projectDescription}
-## Installation ${data.projectInstallation}
-## Usage ${data.projectUsage}
-## Contribution ${data.projectContribution}
-## Licence ${data.projectLicence}
-`;
+## Description 
+${data.projectDescription}
+
+## Installation 
+${data.projectInstallation}
+
+## Usage 
+${data.projectUsage}
+
+## Contribution 
+${data.projectContribution}
+
+## Licence 
+${data.projectLicence}
+
+## GitHub
+https://github.com/${data.githubUsername}
+
+## Email
+Send me an email at ${data.userEmail} to reach me!
+`
+
+        ;
 };
+
+
+// function licenceBadge(data) {
+//     var badge = data.projectLicence;
+//     switch (badge) {
+//         case "MIT":
+//             badge.projectLicence[0] = `![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)`;
+//             console.log(badge);
+//             break;
+
+//     }
+// };
+
 
 // TODO: Create a function to write README file
 function writeToFile(data) {
